@@ -43,12 +43,13 @@ function statement(invoice, plays) {
   return result;
 }
 
+
+
 const invoices = require("./invoices.json");
 const plays = require("./plays.json");
-console.log('test invoices', invoices)
-console.log('test plays', plays)
-console.log('========================')
-invoices.forEach((invoice)=>{
-    console.log(statement(invoice, plays));
-})
-  
+console.log("test invoices", invoices);
+console.log("test plays", plays);
+console.log("========================");
+invoices.forEach((invoice) => {
+  console.log(statement(invoice, plays));
+});
