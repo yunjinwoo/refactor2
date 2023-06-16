@@ -5,6 +5,14 @@
  * 4. 변수 인라인하기 - volumCredits 변수를 제거한다
  * **/
 function statement(invoice, plays) {
+  //renderPlainText 안에 statementData 적용전
+  const statementData = {}
+  statementData.customer = invoice.customer
+  statementData.performances = invoice.performances
+  return renderPlainText(statementData, invoice, plays)
+}
+
+function renderPlainText(data, invoice, plays) {
   let result = `청구내역(고객명:${invoice.customer})\n`;
   for (let perf of invoice.performances) {
     //청구 내역을 출력한다.
@@ -24,6 +32,7 @@ function statement(invoice, plays) {
     }
     return totalAmount
   }
+
   function totalVolumeCredits() {
     let volumeCredits = 0;
     for (let perf of invoice.performances) {
@@ -31,6 +40,7 @@ function statement(invoice, plays) {
     }
     return volumeCredits;
   }
+
   function usd(aNumber) {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -38,6 +48,7 @@ function statement(invoice, plays) {
       minimumFractionDigits: 2,
     }).format(aNumber / 100);
   }
+
   function volumeCreditsFor(perf) {
     let result = 0;
     //포인트를 적립한다
@@ -48,9 +59,11 @@ function statement(invoice, plays) {
     }
     return result;
   }
+
   function playFor(aPerformance) {
     return plays[aPerformance.playID];
   }
+
   function amountFor(aPerformance) {
     let result = 0;
     switch (playFor(aPerformance).type) {
