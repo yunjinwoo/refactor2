@@ -1,0 +1,4 @@
+더 읽을꺼리
+<functional-light javascript> -Kyle Simpson
+<Domain Modeling Made Functional> - Scott Wlaschin
+<Grokking Functional Programming> -Michal Plachta
