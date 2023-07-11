@@ -7,20 +7,21 @@ add_item_to_cart('test2',5)
 add_item_to_cart('test3',10)
 add_item_to_cart('test4',2)
 console.log('shopping_cart', shopping_cart)
-
 console.log('shopping_cart_total', shopping_cart_total)
+
 //P119 전체 코드를 봅시다
 function add_item_to_cart(name, price){  //T:액션
-    shopping_cart = add_item(shopping_cart, name, price)
+    let item = make_cart_item(name, price)
+    shopping_cart = add_item(shopping_cart, item)
     //calc_cart_total(shopping_cart);
     
-    let total = calc_total(cart);
+    let total = calc_total(shopping_cart);
     set_cart_total_dom(total);
-    update_shipping_icons(cart);
+    update_shipping_icons(shopping_cart);
     update_tax_dom(total);
 }
 
-
+/* 삭제 P129
 function calc_cart_total(cart){
     let total = calc_total(cart);
     set_cart_total_dom(total);
@@ -28,18 +29,16 @@ function calc_cart_total(cart){
     update_tax_dom(total);
     shopping_cart_total = total
     console.log('calc_cart_total - shopping_cart_total', shopping_cart_total)
-}
+} */
 
+//P138 refactor
 function update_shipping_icons(cart){
     let buy_buttons = get_buy_buttons_dom();
     buy_buttons?.forEach((button)=>{
         let item = button.item;
-        let new_cart = add_item(cart, item.name, item.price)
-        if(gets_free_shipping(new_cart)){
-            button.show_free_shipping_icon();
-        }else{
-            button.hide_free_shipping_icon();
-        }
+
+        let hasFreeShipping = gets_free_shipping_with_item(cart, item)
+        set_free_shipping_icon(button, hasFreeShipping)
     })
 }
 
@@ -48,14 +47,16 @@ function update_tax_dom(total){
 }
 
 //===============================
-
-function add_item(cart, name, price){
-    let new_cart = cart.slice();
-    new_cart.push({
+//P135 추가
+function make_cart_item(name, price){
+    return {
         name, price
-    })
-    return new_cart;
+    }
 }
+function add_item(cart, item){
+    return add_element_last(cart, item);
+}
+
 function calc_total(cart){    
     let total = 0;
     cart?.forEach((item)=>{
@@ -64,17 +65,26 @@ function calc_total(cart){
     return total
 }
 
+function gets_free_shipping_with_item(cart, item){
+    let new_cart = add_item(cart, item)
+    return gets_free_shipping(new_cart)
+}
+function set_free_shipping_icon(button, isShow){
+    if(isShow){
+        button.show_free_shipping_icon();
+    }else{
+        button.hide_free_shipping_icon();
+    }
+}
+
 function gets_free_shipping(cart){
     return calc_total(cart) >= 20
 }
-/* 
-function gets_free_shipping(total, item_price){
-    return item_price + total >= 20
-} */
 
 function calc_tax(amount){
     return amount*0.10
 }
+
 
 //===================== 껍데기 함수
 function set_cart_total_dom(total){
@@ -93,7 +103,12 @@ function get_buy_buttons_dom(){
     return [obj]
 }
 //===================== 껍데기 함수 END
-
+//===================== 카피-온-라이트 END
+function add_element_last(array, elem){
+    let new_arr = array.slice();
+    new_arr.push(elem)
+    return new_arr;
+}
 
 
 
