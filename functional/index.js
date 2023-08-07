@@ -19,6 +19,22 @@ function add_item_to_cart(name, price){  //T:액션
     set_cart_total_dom(total);
     update_shipping_icons(shopping_cart);
     update_tax_dom(total);
+
+    shopping_cart = black_friday_promotion_safe(shopping_cart)
+    
+}
+
+//P153
+function deepCopy(cart){
+    return cart
+}
+function black_friday_promotion_safe(cart){
+    let cart_copy = deepCopy(cart)
+    black_friday_promotion(cart_copy)
+    return deepCopy(cart_copy)
+}
+function black_friday_promotion(cart){
+    
 }
 
 /* 삭제 P129
@@ -57,7 +73,8 @@ function add_item(cart, item){
     return add_element_last(cart, item);
 }
 
-function calc_total(cart){    
+function 
+calc_total(cart){    
     let total = 0;
     cart?.forEach((item)=>{
         total += item.price;
