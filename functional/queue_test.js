@@ -25,14 +25,16 @@ console.log('cp2', cp2)
 
 console.log('test===queue')
 function cale_cart_total(a, r){
-    console.log('cale_cart_total', a, r)
+    console.log('cale_cart_total=======', a, r)
+    
 }
 function update_total_dom(ttt){
-    console.log('update_total_dom', ttt)
+    console.log('update_total_dom ============ ', ttt)
 }
 
 function calc_cart_worker( cart, done){
     cale_cart_total(cart, function(total){
+        console.log('calc_cart_worker-callback', total)
         update_total_dom(total);
         done(total);
     })            
@@ -41,13 +43,16 @@ function calc_cart_worker( cart, done){
 
 
 
+let cart_list = [
+    { name: 'test2', price: 223 },
+    { name: 'test3', price: 323 },
+    { name: 'test4', price: 423 },
+    { name: 'test5', price: 523 },
+    { name: 'test6', price: 623 },
+]
 let update_total_queue2 = Queue.Queue(calc_cart_worker)
-update_total_queue2({ name: 'test6', price: 123 })
-update_total_queue2({ name: 'test1', price: 22 })
-update_total_queue2({ name: 'test2', price: 16 })
-update_total_queue2({ name: 'test3', price: 15 })
-update_total_queue2({ name: 'test4', price: 14 })
-update_total_queue2({ name: 'test5', price: 12 })
+update_total_queue2({ name: 'qqq1', price: 123 })
+update_total_queue2({ name: 'qqq2', price: 22 })
 console.log(update_total_queue2)
 
 
